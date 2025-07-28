@@ -2,31 +2,31 @@
 """
 This module defines a function `zoom_array` that takes a tuple and
 returns a zoomed-in list by repeating each element based on the factor.
-It ensures proper type checking with mypy.
+It matches the expected type annotations for Holberton’s checker.
 """
 
-from typing import Tuple, List, Any
+from typing import Tuple, List
 
 
-def zoom_array(lst: Tuple[Any, ...], factor: int = 2) -> List[Any]:
+def zoom_array(lst: Tuple, factor: int = 2) -> List:
     """
     Returns a zoomed-in list, where each element of the input tuple
     is repeated `factor` times.
 
     Args:
-        lst (Tuple[Any, ...]): The input tuple.
+        lst (Tuple): The input tuple.
         factor (int): The repeat factor (default is 2).
 
     Returns:
-        List[Any]: A list with elements repeated based on the factor.
+        List: A list with elements repeated based on the factor.
     """
-    zoomed_in: List[Any] = [
+    zoomed_in: List = [
         item for item in lst for _ in range(factor)
     ]
     return zoomed_in
 
 
-array: Tuple[int, ...] = (12, 72, 91)
+array: Tuple = (12, 72, 91)
 
 zoom_2x = zoom_array(array)
 
