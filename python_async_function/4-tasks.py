@@ -1,40 +1,31 @@
 #!/usr/bin/env python3
 """
-This module defines an async function `task_wait_n` that runs multiple
-`task_wait_random` tasks concurrently and r
-eturns their results in ascending order.
+This module contains a function that uses tasks instead of coroutines directly.
 """
 
 import asyncio
 from typing import List
-task_wait_random = __import__('3-tasks').task_wait_random
+from importlib import import_module
+
+task_wait_random = import_module('3-tasks').task_wait_random
 
 
 async def task_wait_n(n: int, max_delay: int) -> List[float]:
     """
-    Run `task_wait_random` n times concurrently and return the results
-    in ascending order without using sort().
-
+    Spawns task_wait_random n times with the specified max_delay.
+    
     Args:
-        n (int): Number of tasks to run.
-        max_delay (int): Maximum delay for each task.
-
+        n (int): Number of tasks to create
+        max_delay (int): Maximum delay for each task
+        
     Returns:
-        List[float]: Sorted list of all delay values.
+        List[float]: List of all delays in ascending order
     """
     tasks = [task_wait_random(max_delay) for _ in range(n)]
-    delays: List[float] = []
-
-    for completed_task in asyncio.as_completed(tasks):
-        delay = await completed_task
-
-        inserted = False
-        for i, value in enumerate(delays):
-            if delay < value:
-                delays.insert(i, delay)
-                inserted = True
-                break
-        if not inserted:
-            delays.append(delay)
-
+    
+    delays = []
+    for task in asyncio.as_completed(tasks):
+        delay = await task
+        delays.append(delay)
+    
     return delays
