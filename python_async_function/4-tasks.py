@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 This module defines an async function `task_wait_n` that runs multiple
-`task_wait_random` tasks concurrently and returns their results in ascending order.
+`task_wait_random` tasks concurrently and r
+eturns their results in ascending order.
 """
 
 import asyncio
