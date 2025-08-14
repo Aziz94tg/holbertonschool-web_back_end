@@ -22,6 +22,7 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
             - start_index is the index of the first item to include.
             - end_index is the index one past the last item to include.
     
+    
     """
     start_index = (page - 1) * page_size
     end_index = start_index + page_size

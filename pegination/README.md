@@ -1,1 +1,1 @@
-This is the pegination project
+This is the pagination project 
