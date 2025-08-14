@@ -73,7 +73,6 @@ class Server:
         current_index = index
         collected = 0
 
-        # Collect page_size items starting from index, skipping deleted items
         max_index = max(indexed_dataset.keys()) + 1
         while collected < page_size and current_index < max_index:
             if current_index in indexed_dataset:
@@ -81,13 +80,11 @@ class Server:
                 collected += 1
             current_index += 1
 
-        # Find next valid index
         next_index = current_index
         while (next_index < max_index and
                next_index not in indexed_dataset):
             next_index += 1
 
-        # If we've reached the end, next_index should be None equivalent
         if next_index >= max_index:
             next_index = None
 
