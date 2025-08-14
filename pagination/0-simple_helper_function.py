@@ -1,28 +1,23 @@
-jl#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
-Pagination helper utilities.
-This module provides small helper functions used to compute index ranges for paginated datasets.
+Simple helper function for pagination.
+
+This module provides a utility function to calculate index ranges
+for pagination purposes.
 """
-from typing import Tuple
 
 
-def index_range(page: int, page_size: int) -> Tuple[int, int]:
+def index_range(page: int, page_size: int) -> tuple:
     """
-    Compute start and end indices for pagination.
-    
-    Given a page number (1-indexed) and a page size, return a tuple of the
-    form (start_index, end_index) suitable for slicing a list or sequence.
+    Calculate the start and end index for pagination.
     
     Args:
-        page: The current page number.
-        page_size: The number of items per page.
-    
+        page (int): The page number (1-indexed)
+        page_size (int): The number of items per page
+        
     Returns:
-        A tuple (start_index, end_index) where:
-            - start_index is the index of the first item to include.
-            - end_index is the index one past the last item to include
-    
-    
+        tuple: A tuple containing the start index and end index
+               for the given pagination parameters
     """
     start_index = (page - 1) * page_size
     end_index = start_index + page_size
