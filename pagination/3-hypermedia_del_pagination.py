@@ -45,50 +45,52 @@ class Server:
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
         Get hypermedia pagination information with deletion resilience.
-        
+
         Args:
             index (int): The current start index, default is None
             page_size (int): The number of items per page, default is 10
-            
+
         Returns:
             Dict: A dictionary containing:
                 - index: the current start index of the return page
                 - next_index: the next index to query with
                 - page_size: the current page size
                 - data: the actual page of the dataset
-                
+
         Raises:
             AssertionError: If index is out of valid range
         """
         indexed_dataset = self.indexed_dataset()
-        
-        assert index is None or (isinstance(index, int) and 
-                                0 <= index < len(indexed_dataset)), \
+
+        assert index is None or (isinstance(index, int) and
+                                 0 <= index < len(indexed_dataset)), \
             "Index out of range"
-        
+
         if index is None:
             index = 0
-            
+
         data = []
         current_index = index
         collected = 0
-        
+
         # Collect page_size items starting from index, skipping deleted items
-        while collected < page_size and current_index < max(indexed_dataset.keys()) + 1:
+        max_index = max(indexed_dataset.keys()) + 1
+        while collected < page_size and current_index < max_index:
             if current_index in indexed_dataset:
                 data.append(indexed_dataset[current_index])
                 collected += 1
             current_index += 1
-            
+
         # Find next valid index
         next_index = current_index
-        while next_index < max(indexed_dataset.keys()) + 1 and next_index not in indexed_dataset:
+        while (next_index < max_index and
+               next_index not in indexed_dataset):
             next_index += 1
-            
+
         # If we've reached the end, next_index should be None equivalent
-        if next_index > max(indexed_dataset.keys()):
+        if next_index >= max_index:
             next_index = None
-        
+
         return {
             'index': index,
             'next_index': next_index,
