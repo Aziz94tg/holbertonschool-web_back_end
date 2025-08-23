@@ -1,25 +1,26 @@
-
-export default class HolbertonClass {
-    constructor(size, location) {
-      if (typeof size !== 'number') {
-        throw new TypeError('Size must be a number');
-      }
-      if (typeof location !== 'string') {
-        throw new TypeError('Location must be a string');
-      }
-  
-      this._size = size;
-      this._location = location;
+export default class Car {
+  constructor(brand, motor, color) {
+    if (typeof brand !== 'string') {
+      throw new TypeError('Brand must be a string');
     }
-  
-
-    valueOf() {
-      return this._size;
+    if (typeof motor !== 'string') {
+      throw new TypeError('Motor must be a string');
     }
-  
-
-    toString() {
-      return this._location;
+    if (typeof color !== 'string') {
+      throw new TypeError('Color must be a string');
     }
+
+    this._brand = brand;
+    this._motor = motor;
+    this._color = color;
   }
-  
+
+  cloneCar() {
+    const Ctor = this.constructor[Symbol.species] || this.constructor;
+    return new Ctor();
+  }
+
+  static get [Symbol.species]() {
+    return this;
+  }
+}
